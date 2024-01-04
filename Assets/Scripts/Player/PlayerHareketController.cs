@@ -9,6 +9,9 @@ public class PlayerHareketController : MonoBehaviour
     [SerializeField]
     Transform ZeminKontrolNoktasi;
 
+    [SerializeField]
+    Animator anim;
+
     public LayerMask zeminMaske;
 
     public float hareketHizi;
@@ -29,6 +32,9 @@ public class PlayerHareketController : MonoBehaviour
     {
         HareketEt();
         ZiplaFNC();
+
+        anim.SetBool("zemindemi", zemindemi);
+        anim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
     }
 
 
@@ -54,6 +60,7 @@ public class PlayerHareketController : MonoBehaviour
             }
 
             rb.velocity = new Vector2(rb.velocity.x, ziplamaGucu);
+
         }
     }
 }
