@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - No collision
   - Water
   - UI
   - Zemin
-  - 
+  - PlayerLayer
   - 
   - 
   - 
@@ -38,11 +38,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Zemin
-    uniqueID: 3392371479
+  - name: Backgrounds
+    uniqueID: 695282319
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Zemin
+    uniqueID: 3392371479
+    locked: 0
+  - name: zeminObjeler
+    uniqueID: 2150043921
     locked: 0
   - name: Objeler
     uniqueID: 360394307
