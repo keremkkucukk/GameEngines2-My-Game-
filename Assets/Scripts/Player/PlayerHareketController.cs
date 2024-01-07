@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class PlayerHareketController : MonoBehaviour
 {
@@ -9,13 +10,16 @@ public class PlayerHareketController : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField]
+    GameObject normalPlayer, kilicPlayer;
+
+    [SerializeField]
     Transform ZeminKontrolNoktasi;
 
     [SerializeField]
-    Animator anim;
+    Animator normalAnim,kilicAnim;
 
     [SerializeField]
-    SpriteRenderer sr;
+    SpriteRenderer normalSprite,kilicSprite;
 
     public LayerMask zeminMaske;
 
@@ -34,23 +38,51 @@ public class PlayerHareketController : MonoBehaviour
 
     bool yonSagdami;
 
+    bool playerCanverdimi;
+
+    bool kiliciVurdumu;
+
     private void Awake()
     {
         instance = this;
+        kiliciVurdumu = false;
 
         rb = GetComponent<Rigidbody2D>();
+        playerCanverdimi = false;
     }
 
 
     private void Update()
     {
+        if (playerCanverdimi)
+            return;
+
+
         if(geriTepkiSayaci <= 0)
         {
             HareketEt();
             ZiplaFNC();
             YonuDegistirFNC();
 
-            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+            if(normalPlayer.activeSelf)
+            {
+                normalSprite.color = new Color(normalSprite.color.r, normalSprite.color.g, normalSprite.color.b, 1f);
+            }
+            if(kilicPlayer.activeSelf)
+            {
+                kilicSprite.color = new Color(kilicSprite.color.r, kilicSprite.color.g, kilicSprite.color.b, 1f);
+
+            }
+
+            if(Input.GetMouseButtonDown(0) && kilicPlayer.activeSelf)
+            {
+                kiliciVurdumu = true;
+            }
+            else
+            {
+                kiliciVurdumu = false;
+            }
+
         }
         else
         {
@@ -68,8 +100,24 @@ public class PlayerHareketController : MonoBehaviour
         }
 
 
-        anim.SetBool("zemindemi", zemindemi);
-        anim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
+        if(normalPlayer.activeSelf)
+        {
+            normalAnim.SetBool("zemindemi", zemindemi);
+            normalAnim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
+        }
+
+        if (kilicPlayer.activeSelf)
+        {
+            kilicAnim.SetBool("zemindemi", zemindemi);
+            kilicAnim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
+                        
+        }
+
+        if (kiliciVurdumu && kilicPlayer.activeSelf)
+        {
+            kilicAnim.SetTrigger("kiliciVurdu");
+        }
+
     }
 
 
@@ -120,9 +168,53 @@ public class PlayerHareketController : MonoBehaviour
     {
         geriTepkiSayaci = geriTepkiSuresi;
 
-        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
+        if (normalPlayer.activeSelf)
+        {
+            normalSprite.color = new Color(normalSprite.color.r, normalSprite.color.g, normalSprite.color.b, .5f);
+        }
+        if (kilicPlayer.activeSelf)
+        {
+            kilicSprite.color = new Color(kilicSprite.color.r, kilicSprite.color.g, kilicSprite.color.b, .5f);
+
+        }
 
 
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
+
+    public void PlayerCanVerdiFNC()
+    {
+        rb.velocity = Vector2.zero;
+        playerCanverdimi = true;
+
+        if (normalPlayer.activeSelf)
+        {
+            normalAnim.SetTrigger("canVerdi");
+        }
+
+        if (kilicPlayer.activeSelf)
+        {
+            kilicAnim.SetTrigger("canVerdi");
+        }
+
+        StartCoroutine(PlayerYokEtSahneYenile());
+    }
+
+    IEnumerator PlayerYokEtSahneYenile()
+    {
+        yield return new WaitForSeconds(2f);
+
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void NormaliKapatKiliciAc()
+    {
+        normalPlayer.SetActive(false);
+        kilicPlayer.SetActive(true);
+    }
+
 }

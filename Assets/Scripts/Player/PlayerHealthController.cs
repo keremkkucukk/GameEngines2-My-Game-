@@ -32,7 +32,9 @@ public class PlayerHealthController : MonoBehaviour
         if (gecerliSaglik <= 0)
         {
             gecerliSaglik = 0;
-            gameObject.SetActive(false);
+           // gameObject.SetActive(false);
+
+            PlayerHareketController.instance.PlayerCanVerdiFNC();
         }
     }
 
