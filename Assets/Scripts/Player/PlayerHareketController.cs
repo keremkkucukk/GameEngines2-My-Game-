@@ -21,6 +21,9 @@ public class PlayerHareketController : MonoBehaviour
     [SerializeField]
     SpriteRenderer normalSprite,kilicSprite;
 
+    [SerializeField]
+    GameObject kilicVurusBoxObje;
+
     public LayerMask zeminMaske;
 
     public float hareketHizi;
@@ -49,6 +52,9 @@ public class PlayerHareketController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         playerCanverdimi = false;
+
+        kilicVurusBoxObje.SetActive(false);
+
     }
 
 
@@ -77,6 +83,8 @@ public class PlayerHareketController : MonoBehaviour
             if(Input.GetMouseButtonDown(0) && kilicPlayer.activeSelf)
             {
                 kiliciVurdumu = true;
+                kilicVurusBoxObje.SetActive(true);
+
             }
             else
             {
