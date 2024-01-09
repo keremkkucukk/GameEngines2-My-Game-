@@ -7,6 +7,9 @@ public class orumcekController : MonoBehaviour
     [SerializeField]
     Transform[] posizyonlar;
 
+    public int maxSaglik;
+    int gecerliSaglik;
+
     public float orumcekHizi;
 
     public float beklemeSuresi;
@@ -25,14 +28,19 @@ public class orumcekController : MonoBehaviour
 
     bool atakYapabilirmi;
 
+    Rigidbody2D rb;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         orumcekCollider = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
+        gecerliSaglik = maxSaglik;
+
         atakYapabilirmi = true;
         hedefPlayer = GameObject.Find("Player").transform;
 
@@ -132,6 +140,41 @@ public class orumcekController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         atakYapabilirmi = true;
+    }
+
+    public IEnumerator GeriTepkiFNC()
+    {
+        atakYapabilirmi = false;
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(.1f);
+
+        gecerliSaglik--;
+
+        if(gecerliSaglik <= 0)
+        {
+            atakYapabilirmi=false;
+            gecerliSaglik = 0;
+            anim.SetTrigger("canVerdi");
+            orumcekCollider.enabled = false;
+            Destroy(gameObject, 2f);
+        }
+        else
+        {
+            for(int i = 0; i < 5; i++)
+            {
+                rb.velocity = new Vector2(-transform.localScale.x + i, rb.velocity.y);
+
+                yield return new WaitForSeconds(0.05f);
+            }
+
+
+            anim.SetBool("hareketEtsinmi", false);
+
+            yield return new WaitForSeconds(0.25f);
+
+            rb.velocity = Vector2.zero;
+            atakYapabilirmi = true;
+        }
     }
 
 }
