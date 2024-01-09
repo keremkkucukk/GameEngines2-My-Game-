@@ -21,13 +21,19 @@ public class orumcekController : MonoBehaviour
 
     public float takipMesafesi = 5f;
 
+    BoxCollider2D orumcekCollider;
+
+    bool atakYapabilirmi;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        orumcekCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
+        atakYapabilirmi = true;
         hedefPlayer = GameObject.Find("Player").transform;
 
         foreach (Transform pos in posizyonlar)
@@ -37,6 +43,9 @@ public class orumcekController : MonoBehaviour
     }
     private void Update()
     {
+        if (!atakYapabilirmi)
+            return;
+
         if(beklemeSayac > 0)
         {
             beklemeSayac -= Time.deltaTime;
@@ -99,11 +108,30 @@ public class orumcekController : MonoBehaviour
             kacinciPosizyon = 0;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
 
         Gizmos.DrawWireSphere(transform.position, takipMesafesi);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(orumcekCollider.IsTouchingLayers(LayerMask.GetMask("PlayerLayer")) && atakYapabilirmi)
+        {
+            atakYapabilirmi = false;
+            anim.SetTrigger("atakYapti");
+            other.GetComponent<PlayerHareketController>().GeriTepkiFNC();
+            other.GetComponent<PlayerHealthController>().CaniAzaltFNC();
+
+            StartCoroutine(YenidenAtakYapsin());
+        }
+    }
+
+    IEnumerator YenidenAtakYapsin()
+    {
+        yield return new WaitForSeconds(1f);
+        atakYapabilirmi = true;
     }
 
 }
