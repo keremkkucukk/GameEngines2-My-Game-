@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class orumcekController : MonoBehaviour
 {
     [SerializeField]
     Transform[] posizyonlar;
+
+    [SerializeField]
+    Slider orumcekSlider;
 
     public int maxSaglik;
     int gecerliSaglik;
@@ -40,6 +44,9 @@ public class orumcekController : MonoBehaviour
     private void Start()
     {
         gecerliSaglik = maxSaglik;
+
+        orumcekSlider.maxValue = maxSaglik;
+        SliderGuncelle();
 
         atakYapabilirmi = true;
         hedefPlayer = GameObject.Find("Player").transform;
@@ -139,7 +146,10 @@ public class orumcekController : MonoBehaviour
     IEnumerator YenidenAtakYapsin()
     {
         yield return new WaitForSeconds(1f);
-        atakYapabilirmi = true;
+
+        if(gecerliSaglik > 0)
+            atakYapabilirmi = true;
+
     }
 
     public IEnumerator GeriTepkiFNC()
@@ -150,12 +160,15 @@ public class orumcekController : MonoBehaviour
 
         gecerliSaglik--;
 
+        SliderGuncelle();
+
         if(gecerliSaglik <= 0)
         {
             atakYapabilirmi=false;
             gecerliSaglik = 0;
             anim.SetTrigger("canVerdi");
             orumcekCollider.enabled = false;
+            orumcekSlider.gameObject.SetActive(false);
             Destroy(gameObject, 2f);
         }
         else
@@ -175,6 +188,11 @@ public class orumcekController : MonoBehaviour
             rb.velocity = Vector2.zero;
             atakYapabilirmi = true;
         }
+    }
+
+    void SliderGuncelle()
+    {
+        orumcekSlider.value = gecerliSaglik;
     }
 
 }
