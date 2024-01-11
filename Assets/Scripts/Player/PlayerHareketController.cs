@@ -41,7 +41,7 @@ public class PlayerHareketController : MonoBehaviour
 
     bool yonSagdami;
 
-    bool playerCanverdimi;
+    public bool playerCanverdimi;
 
     bool kiliciVurdumu;
 

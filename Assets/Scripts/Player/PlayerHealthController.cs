@@ -38,4 +38,14 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
+    public void CaniArtirFNC()
+    {
+        gecerliSaglik++;
+
+        if(gecerliSaglik >= maxSaglik)
+            gecerliSaglik = maxSaglik;
+
+        UIManager.instance.SlideriGuncelle(gecerliSaglik, maxSaglik);
+    }
+
 }

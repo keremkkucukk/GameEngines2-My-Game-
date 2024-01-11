@@ -7,6 +7,9 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField]
     BoxCollider2D kilicVurusBox;
 
+    [SerializeField]
+    GameObject parlamaEfekti;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,7 +17,23 @@ public class PlayerAttackController : MonoBehaviour
         {
             if(other.CompareTag("Orumcek"))
             {
+                if(parlamaEfekti)
+                {
+                    Instantiate(parlamaEfekti, other.transform.position, Quaternion.identity);
+
+                }
                 StartCoroutine(other.GetComponent<orumcekController>().GeriTepkiFNC());
+            }
+        }
+         if (kilicVurusBox.IsTouchingLayers(LayerMask.GetMask("DusmanLayer")))
+        {
+            if (other.CompareTag("Bat"))
+            {
+                if (parlamaEfekti)
+                {
+                    Instantiate(parlamaEfekti, other.transform.position, Quaternion.identity);
+                }
+                other.GetComponent<BatController>().CaniAzaltFNC();
             }
         }
     }

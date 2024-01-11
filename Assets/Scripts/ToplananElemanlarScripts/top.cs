@@ -5,10 +5,10 @@ using UnityEngine;
 public class top : MonoBehaviour
 {
     [SerializeField]
-    bool coinmi;
+    bool coinmi, iksirmi;
 
     [SerializeField]
-    GameObject coinEfekt;
+    GameObject patlamaEfekti;
 
     bool toplandimi;
 
@@ -16,15 +16,30 @@ public class top : MonoBehaviour
     {
         if(other.CompareTag("Player") && !toplandimi)
         {
-            toplandimi = true;
+            if(coinmi)
+            {
+                toplandimi = true;
 
-            GameManager.instance.toplananCoinAdet++;
+                GameManager.instance.toplananCoinAdet++;
 
-            UIManager.instance.CoinAdetGuncelle();
+                UIManager.instance.CoinAdetGuncelle();
 
 
-            Destroy(gameObject);
-            Instantiate(coinEfekt, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+                Instantiate(patlamaEfekti, transform.position, Quaternion.identity);
+            }
+
+            if(iksirmi)
+            {
+                toplandimi = true;
+
+                PlayerHealthController.instance.CaniArtirFNC();
+
+                Destroy(gameObject);
+                Instantiate(patlamaEfekti, transform.position, Quaternion.identity);
+            }
+
+            
         }
     }
 }

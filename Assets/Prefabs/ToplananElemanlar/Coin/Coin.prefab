@@ -137,8 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448dcb871a25a0347b3d7d5dbb0ed6a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinmi: 0
-  coinEfekt: {fileID: 7206733075072900521, guid: ccf8950611c349943a4489afaee8fc50, type: 3}
+  coinmi: 1
+  iksirmi: 0
+  patlamaEfekti: {fileID: 7206733075072900521, guid: ccf8950611c349943a4489afaee8fc50, type: 3}
 --- !u!50 &107933796
 Rigidbody2D:
   serializedVersion: 4
