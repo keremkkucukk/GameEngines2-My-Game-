@@ -10,16 +10,16 @@ public class PlayerHareketController : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField]
-    GameObject normalPlayer, kilicPlayer;
+    GameObject normalPlayer, kilicPlayer, mizrakPlayer;
 
     [SerializeField]
     Transform ZeminKontrolNoktasi;
 
     [SerializeField]
-    Animator normalAnim,kilicAnim;
+    Animator normalAnim,kilicAnim, mizrakAnim;
 
     [SerializeField]
-    SpriteRenderer normalSprite,kilicSprite;
+    SpriteRenderer normalSprite,kilicSprite, mizrakSprite;
 
     [SerializeField]
     GameObject kilicVurusBoxObje;
@@ -79,8 +79,13 @@ public class PlayerHareketController : MonoBehaviour
                 kilicSprite.color = new Color(kilicSprite.color.r, kilicSprite.color.g, kilicSprite.color.b, 1f);
 
             }
+            if (mizrakPlayer.activeSelf)
+            {
+                mizrakSprite.color = new Color(mizrakSprite.color.r, mizrakSprite.color.g, mizrakSprite.color.b, 1f);
 
-            if(Input.GetMouseButtonDown(0) && kilicPlayer.activeSelf)
+            }
+
+            if (Input.GetMouseButtonDown(0) && kilicPlayer.activeSelf)
             {
                 kiliciVurdumu = true;
                 kilicVurusBoxObje.SetActive(true);
@@ -91,6 +96,11 @@ public class PlayerHareketController : MonoBehaviour
                 kiliciVurdumu = false;
             }
 
+            if (Input.GetMouseButtonDown(0) && mizrakPlayer.activeSelf)
+            {
+
+            }
+            
         }
         else
         {
@@ -119,6 +129,13 @@ public class PlayerHareketController : MonoBehaviour
             kilicAnim.SetBool("zemindemi", zemindemi);
             kilicAnim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
                         
+        }
+
+        if (mizrakPlayer.activeSelf)
+        {
+            mizrakAnim.SetBool("zemindemi", zemindemi);
+            mizrakAnim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
+
         }
 
         if (kiliciVurdumu && kilicPlayer.activeSelf)
@@ -180,12 +197,18 @@ public class PlayerHareketController : MonoBehaviour
         {
             normalSprite.color = new Color(normalSprite.color.r, normalSprite.color.g, normalSprite.color.b, .5f);
         }
+
         if (kilicPlayer.activeSelf)
         {
             kilicSprite.color = new Color(kilicSprite.color.r, kilicSprite.color.g, kilicSprite.color.b, .5f);
 
         }
 
+        if (mizrakPlayer.activeSelf)
+        {
+            mizrakSprite.color = new Color(mizrakSprite.color.r, mizrakSprite.color.g, mizrakSprite.color.b, .5f);
+
+        }
 
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
@@ -205,6 +228,13 @@ public class PlayerHareketController : MonoBehaviour
             kilicAnim.SetTrigger("canVerdi");
         }
 
+        if (mizrakPlayer.activeSelf)
+        {
+            mizrakAnim.SetTrigger("canVerdi");
+        }
+
+
+
         StartCoroutine(PlayerYokEtSahneYenile());
     }
 
@@ -222,7 +252,15 @@ public class PlayerHareketController : MonoBehaviour
     public void NormaliKapatKiliciAc()
     {
         normalPlayer.SetActive(false);
+        mizrakPlayer.SetActive(false);
         kilicPlayer.SetActive(true);
+    }
+
+    public void HerseyiKapatMizrakAc()
+    {
+        normalPlayer.SetActive(false);
+        kilicPlayer.SetActive(false);
+        mizrakPlayer.SetActive(true);
     }
 
 }
