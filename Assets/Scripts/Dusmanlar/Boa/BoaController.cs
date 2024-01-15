@@ -9,4 +9,52 @@ public class BoaController : MonoBehaviour
 
     Animator anim;
     Rigidbody2D rb;
+
+    [SerializeField]
+    float gorusMesafesi = 8f;
+
+    [SerializeField]
+    BoxCollider2D boaCollider;
+
+    public bool oldumu;
+
+    public LayerMask playerLayer;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        oldumu = false;
+    }
+
+    private void Update()
+    {
+        if (oldumu)
+            return;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left),gorusMesafesi, playerLayer);
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.left) * gorusMesafesi, Color.green);
+
+        transform.localScale = new Vector3(-1, 1, 1);
+
+        if(hit.collider)
+        {
+            if(hit.collider.CompareTag("Player"))
+            {
+                rb.velocity = new Vector2(-boaKosmaHizi, rb.velocity.y);
+                anim.SetBool("kossunmu", true);
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(-boaYurumeHizi, rb.velocity.y);
+            anim.SetBool("kossunmu", false);
+        }
+
+    }
 }

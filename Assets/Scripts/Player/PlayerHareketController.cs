@@ -230,7 +230,7 @@ public class PlayerHareketController : MonoBehaviour
 
         if (mizrakPlayer.activeSelf)
         {
-            mizrakAnim.SetTrigger("canVerdi");
+            mizrakAnim.SetTrigger("caniniVerdi");
         }
 
 
