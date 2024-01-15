@@ -55,6 +55,23 @@ public class BoaController : MonoBehaviour
             rb.velocity = new Vector2(-boaYurumeHizi, rb.velocity.y);
             anim.SetBool("kossunmu", false);
         }
-
     }
+
+    public void BoaOldu()
+    {
+        oldumu = true;
+        anim.SetTrigger("canVerdi");
+
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+
+
+        foreach(BoxCollider2D box in GetComponents<BoxCollider2D>())
+        {
+            box.enabled = false;
+        }
+
+        Destroy(gameObject, 3f);
+    }
+
 }

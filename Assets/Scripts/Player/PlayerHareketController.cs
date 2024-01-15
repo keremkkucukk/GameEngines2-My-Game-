@@ -45,6 +45,12 @@ public class PlayerHareketController : MonoBehaviour
 
     bool kiliciVurdumu;
 
+    [SerializeField]
+    GameObject atilacakMizrak;
+
+    [SerializeField]
+    Transform mizrakCikisNoktasi;
+
     private void Awake()
     {
         instance = this;
@@ -96,9 +102,10 @@ public class PlayerHareketController : MonoBehaviour
                 kiliciVurdumu = false;
             }
 
-            if (Input.GetMouseButtonDown(0) && mizrakPlayer.activeSelf)
+            if (Input.GetKeyDown(KeyCode.W)&& mizrakPlayer.activeSelf)
             {
-
+                mizrakAnim.SetTrigger("mizrakAtti");
+                Invoke("MizragiFirlat", .5f);
             }
             
         }
@@ -143,6 +150,13 @@ public class PlayerHareketController : MonoBehaviour
             kilicAnim.SetTrigger("kiliciVurdu");
         }
 
+    }
+
+    void MizragiFirlat()
+    {
+        GameObject mizrak = Instantiate(atilacakMizrak, mizrakCikisNoktasi.position, mizrakCikisNoktasi.rotation);
+        mizrak.transform.localScale = transform.localScale;
+        mizrak.GetComponent<Rigidbody2D>().velocity = mizrakCikisNoktasi.right * transform.localScale.x * 7f;
     }
 
 
