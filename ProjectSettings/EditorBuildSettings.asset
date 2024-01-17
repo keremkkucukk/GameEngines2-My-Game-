@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/girisSahnesi.unity
     guid: 808b87ce49f04d44b885aad530d3e81a
   - enabled: 1
-    path: Assets/Scenes/testSahne.unity
+    path: Assets/Scenes/testSahne 1.unity
+    guid: b307bf78c8fa2d641bff3e69f17c12fa
+  - enabled: 1
+    path: Assets/Scenes/testSahne 2.unity
     guid: 1b8e79aab439a794b982ea16923df436
   m_configObjects: {}
