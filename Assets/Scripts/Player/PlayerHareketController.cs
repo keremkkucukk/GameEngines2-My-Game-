@@ -157,6 +157,8 @@ public class PlayerHareketController : MonoBehaviour
         GameObject mizrak = Instantiate(atilacakMizrak, mizrakCikisNoktasi.position, mizrakCikisNoktasi.rotation);
         mizrak.transform.localScale = transform.localScale;
         mizrak.GetComponent<Rigidbody2D>().velocity = mizrakCikisNoktasi.right * transform.localScale.x * 7f;
+
+        Invoke("HerseyiKapatNormaliAc", .1f);
     }
 
 
@@ -277,4 +279,11 @@ public class PlayerHareketController : MonoBehaviour
         mizrakPlayer.SetActive(true);
     }
 
+
+    public void HerseyiKapatNormaliAc()
+    {
+        normalPlayer.SetActive(true);
+        kilicPlayer.SetActive(false);
+        mizrakPlayer.SetActive(false);
+    }
 }

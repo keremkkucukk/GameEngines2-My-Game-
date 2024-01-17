@@ -20,6 +20,9 @@ public class BoaController : MonoBehaviour
 
     public LayerMask playerLayer;
 
+    [SerializeField]
+    GameObject kanamaEfekti;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -57,6 +60,22 @@ public class BoaController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(boaCollider.IsTouchingLayers(LayerMask.GetMask("PlayerLayer")))
+        {
+            if(other.CompareTag("Player"))
+            {
+                anim.SetTrigger("atakYapti");
+
+                other.GetComponent<PlayerHareketController>().GeriTepkiFNC();
+                other.GetComponent<PlayerHealthController>().CaniAzaltFNC();
+
+
+            }
+        }
+    }
+
     public void BoaOldu()
     {
         oldumu = true;
@@ -65,6 +84,7 @@ public class BoaController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
 
+        Instantiate(kanamaEfekti, transform.position, transform.rotation);
 
         foreach(BoxCollider2D box in GetComponents<BoxCollider2D>())
         {
