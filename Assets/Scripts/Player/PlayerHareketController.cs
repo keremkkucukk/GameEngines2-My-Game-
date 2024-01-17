@@ -286,4 +286,25 @@ public class PlayerHareketController : MonoBehaviour
         kilicPlayer.SetActive(false);
         mizrakPlayer.SetActive(false);
     }
+
+    public void PlayeriHareketsizYap()
+    {
+        if(normalPlayer.activeSelf)
+        {
+            rb.velocity = Vector2.zero;
+            normalAnim.SetFloat("hareketHizi", 0f);
+        }
+
+        if (kilicPlayer.activeSelf)
+        {
+            rb.velocity = Vector2.zero;
+            kilicAnim.SetFloat("hareketHizi", 0f);
+        }
+
+        if (mizrakPlayer.activeSelf)
+        {
+            rb.velocity = Vector2.zero;
+            mizrakAnim.SetFloat("hareketHizi", 0f);
+        }
+    }
 }
