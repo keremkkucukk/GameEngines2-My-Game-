@@ -36,4 +36,17 @@ public class SalinanEngelController : MonoBehaviour
             donmeHizi = -Mathf.Abs(donmeHizi);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(GetComponent<EdgeCollider2D>().IsTouchingLayers(LayerMask.GetMask("PlayerLayer")))
+        {
+            if(other.CompareTag("Player") && !other.GetComponent<PlayerHareketController>().playerCanverdimi)
+            {
+                other.GetComponent<PlayerHareketController>().GeriTepkiFNC();
+                other.GetComponent<PlayerHealthController>().CaniAzaltFNC();
+
+            }
+        }
+    }
 }
