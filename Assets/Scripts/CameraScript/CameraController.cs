@@ -43,7 +43,11 @@ public class CameraController : MonoBehaviour
                 transform.position.z);
         }
 
-        BackgroundHareketFNC();
+        if(backgrounds!=null)
+        {
+            BackgroundHareketFNC();
+        }
+
     }
 
 
