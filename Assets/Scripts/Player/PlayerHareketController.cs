@@ -10,19 +10,20 @@ public class PlayerHareketController : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField]
-    GameObject normalPlayer, kilicPlayer, mizrakPlayer;
+    GameObject normalPlayer, kilicPlayer, mizrakPlayer, okPlayer;
 
     [SerializeField]
     Transform ZeminKontrolNoktasi;
 
     [SerializeField]
-    Animator normalAnim,kilicAnim, mizrakAnim;
+    Animator normalAnim,kilicAnim, mizrakAnim, okAnim;
 
     [SerializeField]
-    SpriteRenderer normalSprite,kilicSprite, mizrakSprite;
+    SpriteRenderer normalSprite,kilicSprite, mizrakSprite, okSprite;
 
     [SerializeField]
     GameObject kilicVurusBoxObje;
+
 
     public LayerMask zeminMaske;
 
@@ -50,6 +51,12 @@ public class PlayerHareketController : MonoBehaviour
 
     [SerializeField]
     Transform mizrakCikisNoktasi;
+
+    [SerializeField]
+    GameObject atilacakOk;
+
+    [SerializeField]
+    Transform okCikisNoktasi;
 
     private void Awake()
     {
@@ -90,6 +97,11 @@ public class PlayerHareketController : MonoBehaviour
                 mizrakSprite.color = new Color(mizrakSprite.color.r, mizrakSprite.color.g, mizrakSprite.color.b, 1f);
 
             }
+            if (okPlayer.activeSelf)
+            {
+                okSprite.color = new Color(okSprite.color.r, okSprite.color.g, okSprite.color.b, 1f);
+
+            }
 
             if (Input.GetMouseButtonDown(0) && kilicPlayer.activeSelf)
             {
@@ -107,7 +119,13 @@ public class PlayerHareketController : MonoBehaviour
                 mizrakAnim.SetTrigger("mizrakAtti");
                 Invoke("MizragiFirlat", .5f);
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.E) && okPlayer.activeSelf)
+            {
+                okAnim.SetTrigger("okAtti");
+                Invoke("OkuFirlat", .7f);
+            }
+
         }
         else
         {
@@ -142,7 +160,12 @@ public class PlayerHareketController : MonoBehaviour
         {
             mizrakAnim.SetBool("zemindemi", zemindemi);
             mizrakAnim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
+        }
 
+        if (okPlayer.activeSelf)
+        {
+            okAnim.SetBool("zemindemi", zemindemi);
+            okAnim.SetFloat("hareketHizi", Mathf.Abs(rb.velocity.x));
         }
 
         if (kiliciVurdumu && kilicPlayer.activeSelf)
@@ -161,6 +184,13 @@ public class PlayerHareketController : MonoBehaviour
         Invoke("HerseyiKapatNormaliAc", .1f);
     }
 
+    void OkuFirlat()
+    {
+        GameObject okObje = Instantiate(atilacakOk, okCikisNoktasi.position, okCikisNoktasi.rotation);
+        okObje.transform.localScale = transform.localScale;
+
+        okObje.GetComponent<Rigidbody2D>().velocity=okCikisNoktasi.right* transform.localScale.x * 15f;
+    }
 
     void HareketEt()
     {
@@ -217,13 +247,16 @@ public class PlayerHareketController : MonoBehaviour
         if (kilicPlayer.activeSelf)
         {
             kilicSprite.color = new Color(kilicSprite.color.r, kilicSprite.color.g, kilicSprite.color.b, .5f);
-
         }
 
         if (mizrakPlayer.activeSelf)
         {
             mizrakSprite.color = new Color(mizrakSprite.color.r, mizrakSprite.color.g, mizrakSprite.color.b, .5f);
+        }
 
+        if (okPlayer.activeSelf)
+        {
+            okSprite.color = new Color(okSprite.color.r, okSprite.color.g, okSprite.color.b, .5f);
         }
 
         rb.velocity = new Vector2(0, rb.velocity.y);
@@ -246,9 +279,13 @@ public class PlayerHareketController : MonoBehaviour
 
         if (mizrakPlayer.activeSelf)
         {
-            mizrakAnim.SetTrigger("caniniVerdi");
+            mizrakAnim.SetTrigger("canVerdi");
         }
 
+        if (okPlayer.activeSelf)
+        {
+            okAnim.SetTrigger("canVerdi");
+        }
 
 
         StartCoroutine(PlayerYokEtSahneYenile());
@@ -270,6 +307,8 @@ public class PlayerHareketController : MonoBehaviour
         normalPlayer.SetActive(false);
         mizrakPlayer.SetActive(false);
         kilicPlayer.SetActive(true);
+        okPlayer.SetActive(false);
+
     }
 
     public void HerseyiKapatMizrakAc()
@@ -277,6 +316,8 @@ public class PlayerHareketController : MonoBehaviour
         normalPlayer.SetActive(false);
         kilicPlayer.SetActive(false);
         mizrakPlayer.SetActive(true);
+        okPlayer.SetActive(false);
+
     }
 
 
@@ -285,7 +326,20 @@ public class PlayerHareketController : MonoBehaviour
         normalPlayer.SetActive(true);
         kilicPlayer.SetActive(false);
         mizrakPlayer.SetActive(false);
+        okPlayer.SetActive(false);
+
     }
+
+
+    public void HerseyiKapatOkuAc()
+    {
+        normalPlayer.SetActive(false);
+        kilicPlayer.SetActive(false);
+        mizrakPlayer.SetActive(false);
+        okPlayer.SetActive(true);
+
+    }
+
 
     public void PlayeriHareketsizYap()
     {
@@ -305,6 +359,12 @@ public class PlayerHareketController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             mizrakAnim.SetFloat("hareketHizi", 0f);
+        }
+
+        if (okPlayer.activeSelf)
+        {
+            rb.velocity = Vector2.zero;
+            okAnim.SetFloat("hareketHizi", 0f);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAraclarKontroller : MonoBehaviour
 {
     [SerializeField]
-    bool kilicmi, mizrakmi;
+    bool kilicmi, mizrakmi, okmu;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -21,6 +21,11 @@ public class PlayerAraclarKontroller : MonoBehaviour
             if (other != null && mizrakmi)
             {
                 other.GetComponent<PlayerHareketController>().HerseyiKapatMizrakAc();
+            }
+
+            if (other != null && okmu)
+            {
+                other.GetComponent<PlayerHareketController>().HerseyiKapatOkuAc();
             }
 
             Destroy(gameObject);
