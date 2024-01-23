@@ -58,10 +58,14 @@ public class PlayerHareketController : MonoBehaviour
     [SerializeField]
     Transform okCikisNoktasi;
 
+    bool okAtabilirmi;
+
     private void Awake()
     {
         instance = this;
         kiliciVurdumu = false;
+        okAtabilirmi = true;
+
 
         rb = GetComponent<Rigidbody2D>();
         playerCanverdimi = false;
@@ -120,10 +124,10 @@ public class PlayerHareketController : MonoBehaviour
                 Invoke("MizragiFirlat", .5f);
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && okPlayer.activeSelf)
+            if (Input.GetKeyDown(KeyCode.E) && okPlayer.activeSelf && okAtabilirmi)
             {
                 okAnim.SetTrigger("okAtti");
-                Invoke("OkuFirlat", .7f);
+                StartCoroutine(OkuAzSonraAtRoutine());
             }
 
         }
@@ -184,15 +188,15 @@ public class PlayerHareketController : MonoBehaviour
         Invoke("HerseyiKapatNormaliAc", .1f);
     }
 
-    void OkuFirlat()
+    IEnumerator OkuAzSonraAtRoutine()
     {
+        okAtabilirmi = false;
+        yield return new WaitForSeconds(.7f);
         OkPoolManager.instance.OkuFirlatFNC(okCikisNoktasi, this.transform);
+        okAtabilirmi = true;
 
-        //GameObject okObje = Instantiate(atilacakOk, okCikisNoktasi.position, okCikisNoktasi.rotation);
-        //okObje.transform.localScale = transform.localScale;
-
-        //okObje.GetComponent<Rigidbody2D>().velocity=okCikisNoktasi.right* transform.localScale.x * 15f;
     }
+
 
     void HareketEt()
     {
