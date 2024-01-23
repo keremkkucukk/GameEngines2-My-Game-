@@ -186,10 +186,12 @@ public class PlayerHareketController : MonoBehaviour
 
     void OkuFirlat()
     {
-        GameObject okObje = Instantiate(atilacakOk, okCikisNoktasi.position, okCikisNoktasi.rotation);
-        okObje.transform.localScale = transform.localScale;
+        OkPoolManager.instance.OkuFirlatFNC(okCikisNoktasi, this.transform);
 
-        okObje.GetComponent<Rigidbody2D>().velocity=okCikisNoktasi.right* transform.localScale.x * 15f;
+        //GameObject okObje = Instantiate(atilacakOk, okCikisNoktasi.position, okCikisNoktasi.rotation);
+        //okObje.transform.localScale = transform.localScale;
+
+        //okObje.GetComponent<Rigidbody2D>().velocity=okCikisNoktasi.right* transform.localScale.x * 15f;
     }
 
     void HareketEt()
