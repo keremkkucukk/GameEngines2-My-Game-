@@ -13,7 +13,7 @@ public class PlayerAraclarKontroller : MonoBehaviour
         {
             if(other!=null && kilicmi)
             {
-                other.GetComponent<PlayerHareketController>().NormaliKapatKiliciAc();
+                other.GetComponent<PlayerHareketController>().HerseyiKapatKiliciAc();
 
 
             }

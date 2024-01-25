@@ -118,7 +118,7 @@ public class PlayerHareketController : MonoBehaviour
                 kiliciVurdumu = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.W)&& mizrakPlayer.activeSelf)
+            if (Input.GetKeyDown(KeyCode.E)&& mizrakPlayer.activeSelf)
             {
                 mizrakAnim.SetTrigger("mizrakAtti");
                 Invoke("MizragiFirlat", .5f);
@@ -308,7 +308,7 @@ public class PlayerHareketController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void NormaliKapatKiliciAc()
+    public void HerseyiKapatKiliciAc()
     {
         normalPlayer.SetActive(false);
         mizrakPlayer.SetActive(false);

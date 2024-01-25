@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/AnaMenu.unity
+    guid: d51536a69e4b9864eac57273c233db26
+  - enabled: 1
     path: Assets/Scenes/girisSahnesi.unity
     guid: 808b87ce49f04d44b885aad530d3e81a
   - enabled: 1

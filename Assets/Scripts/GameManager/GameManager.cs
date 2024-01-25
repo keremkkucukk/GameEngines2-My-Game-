@@ -18,4 +18,11 @@ public class GameManager : MonoBehaviour
     {
         toplananCoinAdet = 0;
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.instance.PausePanelAcKapat();
+        }
+    }
 }

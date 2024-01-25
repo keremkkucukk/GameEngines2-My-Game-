@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,10 +15,24 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TMP_Text coinTxt;
 
+    [SerializeField]
+    Transform butonlarPanel;
+
+    [SerializeField]
+    GameObject pausePanel;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        TumButonlarinAlphasiniDusur();
+        butonlarPanel.GetChild(0).GetComponent<CanvasGroup>().alpha = 0f;
+        PlayerHareketController.instance.HerseyiKapatNormaliAc();
+
+        pausePanel.SetActive(false);
     }
 
     public void SlideriGuncelle(int gecerliDeger, int maxDeger)
@@ -30,6 +45,76 @@ public class UIManager : MonoBehaviour
     public void CoinAdetGuncelle()
     {
         coinTxt.text = GameManager.instance.toplananCoinAdet.ToString();
+    }
+
+    void TumButonlarinAlphasiniDusur()
+    {
+        foreach (Transform btn in butonlarPanel)
+        {
+            btn.gameObject.GetComponent<CanvasGroup>().alpha = 0.25f;
+        }
+    }
+
+    public void NormalButonaBasildi()
+    {
+        TumButonlarinAlphasiniDusur();
+
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.GetComponent<CanvasGroup>().alpha = 1f;
+
+        PlayerHareketController.instance.HerseyiKapatNormaliAc();
+
+    }
+
+    public void KilicButonaBasildi()
+    {
+        TumButonlarinAlphasiniDusur();
+
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.GetComponent<CanvasGroup>().alpha = 1f;
+
+        PlayerHareketController.instance.HerseyiKapatKiliciAc();
+
+
+    }
+
+    public void OkButonaBasildi()
+    {
+        TumButonlarinAlphasiniDusur();
+
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.GetComponent<CanvasGroup>().alpha = 1f;
+
+        PlayerHareketController.instance.HerseyiKapatOkuAc();
+
+
+    }
+
+    public void MizrakButonaBasildi()
+    {
+        TumButonlarinAlphasiniDusur();
+
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.GetComponent<CanvasGroup>().alpha = 1f;
+        PlayerHareketController.instance.HerseyiKapatMizrakAc();
+
+    }
+
+
+    public void PausePanelAcKapat()
+    {
+        if(!pausePanel.activeInHierarchy)
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1f;
+
+        }
+    }
+
+    public void AnaMenuyeDon()
+    {
+        SceneManager.LoadScene("AnaMenu");
     }
 }
 
