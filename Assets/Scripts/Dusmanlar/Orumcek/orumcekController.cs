@@ -72,7 +72,11 @@ public class orumcekController : MonoBehaviour
         {
             if(hedefPlayer.position.x > posizyonlar[0].position.x && hedefPlayer.position.x < posizyonlar[1].position.x)
             {
-                transform.position = Vector3.MoveTowards(transform.position, hedefPlayer.position, orumcekHizi * Time.deltaTime);
+                Vector3 yeniPos = hedefPlayer.position;
+                yeniPos.y = transform.position.y;
+
+
+                transform.position = Vector3.MoveTowards(transform.position, yeniPos, orumcekHizi * Time.deltaTime);
 
                 anim.SetBool("hareketEtsinmi", true);
 

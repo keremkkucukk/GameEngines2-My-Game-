@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject pausePanel;
 
+    [SerializeField]
+    GameObject bitisPanel;
+
     private void Awake()
     {
         instance = this;
@@ -33,6 +36,8 @@ public class UIManager : MonoBehaviour
         PlayerHareketController.instance.HerseyiKapatNormaliAc();
 
         pausePanel.SetActive(false);
+        bitisPanel.SetActive(false);
+
     }
 
     public void SlideriGuncelle(int gecerliDeger, int maxDeger)
@@ -52,6 +57,7 @@ public class UIManager : MonoBehaviour
         foreach (Transform btn in butonlarPanel)
         {
             btn.gameObject.GetComponent<CanvasGroup>().alpha = 0.25f;
+            btn.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -63,6 +69,7 @@ public class UIManager : MonoBehaviour
 
         PlayerHareketController.instance.HerseyiKapatNormaliAc();
 
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable = false;
     }
 
     public void KilicButonaBasildi()
@@ -73,6 +80,7 @@ public class UIManager : MonoBehaviour
 
         PlayerHareketController.instance.HerseyiKapatKiliciAc();
 
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable = false;
 
     }
 
@@ -84,6 +92,7 @@ public class UIManager : MonoBehaviour
 
         PlayerHareketController.instance.HerseyiKapatOkuAc();
 
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable = false;
 
     }
 
@@ -93,6 +102,8 @@ public class UIManager : MonoBehaviour
 
         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.GetComponent<CanvasGroup>().alpha = 1f;
         PlayerHareketController.instance.HerseyiKapatMizrakAc();
+
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable = false;
 
     }
 
@@ -115,6 +126,22 @@ public class UIManager : MonoBehaviour
     public void AnaMenuyeDon()
     {
         SceneManager.LoadScene("AnaMenu");
+    }
+
+    public void BitisPanelinAc()
+    {
+        bitisPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void TekrarOyna()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void OyundanCik()
+    {
+        Application.Quit();
     }
 }
 

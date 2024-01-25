@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         toplananCoinAdet = 0;
+        Time.timeScale = 1f;
     }
     private void Update()
     {
@@ -24,5 +25,10 @@ public class GameManager : MonoBehaviour
         {
             UIManager.instance.PausePanelAcKapat();
         }
+    }
+
+    public void OyunCikisEkraniniAc()
+    {
+        UIManager.instance.BitisPanelinAc();
     }
 }

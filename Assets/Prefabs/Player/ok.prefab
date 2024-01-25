@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7325461932635386805}
   - component: {fileID: 4900745076759544152}
   - component: {fileID: 3881848977052907846}
-  m_Layer: 0
+  - component: {fileID: -5346876351040775445}
+  m_Layer: 12
   m_Name: ok
   m_TagString: Ok
   m_Icon: {fileID: 0}
@@ -133,3 +134,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-5346876351040775445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785005624779233665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bede3aa2b8328ca42927964bd0ca71ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parlamaEfect: {fileID: 5397386150934930565, guid: 64418078f66ad2141b22c91d12ea31de, type: 3}

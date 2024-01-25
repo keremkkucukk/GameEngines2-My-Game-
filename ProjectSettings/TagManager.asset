@@ -9,6 +9,7 @@ TagManager:
   - Bat
   - Boa
   - Ok
+  - iskelet
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Coin
   - DusmanLayer
   - KilicLayer
-  - 
-  - 
+  - iskeletLayer
+  - okLayer
   - 
   - 
   - 

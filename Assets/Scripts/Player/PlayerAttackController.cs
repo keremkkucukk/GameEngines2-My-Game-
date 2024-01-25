@@ -25,7 +25,7 @@ public class PlayerAttackController : MonoBehaviour
                 StartCoroutine(other.GetComponent<orumcekController>().GeriTepkiFNC());
             }
         }
-         if (kilicVurusBox.IsTouchingLayers(LayerMask.GetMask("DusmanLayer")))
+        if (kilicVurusBox.IsTouchingLayers(LayerMask.GetMask("DusmanLayer")))
         {
             if (other.CompareTag("Bat"))
             {
@@ -34,6 +34,18 @@ public class PlayerAttackController : MonoBehaviour
                     Instantiate(parlamaEfekti, other.transform.position, Quaternion.identity);
                 }
                 other.GetComponent<BatController>().CaniAzaltFNC();
+            }
+        }
+
+        if (kilicVurusBox.IsTouchingLayers(LayerMask.GetMask("iskeletLayer")))
+        {
+            if (other.CompareTag("iskelet"))
+            {
+                if (parlamaEfekti)
+                {
+                    Instantiate(parlamaEfekti, other.transform.position, Quaternion.identity);
+                }
+                other.GetComponent<iskeletHealthController>().CaniAzaltFNC();
             }
         }
     }

@@ -107,7 +107,7 @@ public class PlayerHareketController : MonoBehaviour
 
             }
 
-            if (Input.GetMouseButtonDown(0) && kilicPlayer.activeSelf)
+            if (Input.GetKeyDown(KeyCode.E) && kilicPlayer.activeSelf)
             {
                 kiliciVurdumu = true;
                 kilicVurusBoxObje.SetActive(true);
