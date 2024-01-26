@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class orumcekController : MonoBehaviour
+public class OrumcekKontroller : MonoBehaviour
 {
     [SerializeField]
     Transform[] posizyonlar;
@@ -17,7 +17,6 @@ public class orumcekController : MonoBehaviour
     public float orumcekHizi;
 
     public float beklemeSuresi;
-
     float beklemeSayac;
 
     Animator anim;
@@ -25,6 +24,7 @@ public class orumcekController : MonoBehaviour
     int kacinciPosizyon;
 
     Transform hedefPlayer;
+
 
     public float takipMesafesi = 5f;
 
@@ -36,11 +36,13 @@ public class orumcekController : MonoBehaviour
 
     [SerializeField]
     GameObject iksirPrefab;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         orumcekCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+
     }
 
     private void Start()
@@ -58,21 +60,26 @@ public class orumcekController : MonoBehaviour
             pos.parent = null;
         }
     }
+
     private void Update()
     {
         if (!atakYapabilirmi)
             return;
 
-        if(beklemeSayac > 0)
+        if(beklemeSayac>0)
         {
+            //örümcek verilen noktada duruyor
             beklemeSayac -= Time.deltaTime;
             anim.SetBool("hareketEtsinmi", false);
-        }
-        else
+        } else
         {
-            if(hedefPlayer.position.x > posizyonlar[0].position.x && hedefPlayer.position.x < posizyonlar[1].position.x)
+            if(hedefPlayer.position.x > posizyonlar[0].position.x && hedefPlayer.position.x<posizyonlar[1].position.x )
             {
-                transform.position = Vector3.MoveTowards(transform.position, hedefPlayer.position, orumcekHizi * Time.deltaTime);
+                Vector3 yeniPos = hedefPlayer.position;
+                yeniPos.y = transform.position.y;
+
+                
+                transform.position = Vector3.MoveTowards(transform.position, yeniPos, orumcekHizi * Time.deltaTime);
 
                 anim.SetBool("hareketEtsinmi", true);
 
@@ -83,14 +90,15 @@ public class orumcekController : MonoBehaviour
                 else if (transform.position.x < hedefPlayer.position.x)
                 {
                     transform.localScale = Vector3.one;
+
                 }
-            }
-            else
+
+
+            } else
             {
                 anim.SetBool("hareketEtsinmi", true);
 
                 transform.position = Vector3.MoveTowards(transform.position, posizyonlar[kacinciPosizyon].position, orumcekHizi * Time.deltaTime);
-
 
                 if (transform.position.x > posizyonlar[kacinciPosizyon].position.x)
                 {
@@ -99,6 +107,7 @@ public class orumcekController : MonoBehaviour
                 else if (transform.position.x < posizyonlar[kacinciPosizyon].position.x)
                 {
                     transform.localScale = Vector3.one;
+
                 }
 
 
@@ -113,9 +122,11 @@ public class orumcekController : MonoBehaviour
 
 
 
+
+
         }
-        
     }
+
 
     void PosizyonuDegistir()
     {
@@ -125,6 +136,7 @@ public class orumcekController : MonoBehaviour
             kacinciPosizyon = 0;
     }
 
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -132,9 +144,10 @@ public class orumcekController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, takipMesafesi);
     }
 
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(orumcekCollider.IsTouchingLayers(LayerMask.GetMask("PlayerLayer")) && atakYapabilirmi)
+        if(orumcekCollider.IsTouchingLayers(LayerMask.GetMask("PlayerLayer"))&& atakYapabilirmi )
         {
             atakYapabilirmi = false;
             anim.SetTrigger("atakYapti");
@@ -143,47 +156,48 @@ public class orumcekController : MonoBehaviour
 
             StartCoroutine(YenidenAtakYapsin());
         }
+            
     }
 
     IEnumerator YenidenAtakYapsin()
     {
         yield return new WaitForSeconds(1f);
 
-        if(gecerliSaglik > 0)
+        if(gecerliSaglik>0)
             atakYapabilirmi = true;
-
     }
+
 
     public IEnumerator GeriTepkiFNC()
     {
         atakYapabilirmi = false;
         rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(.1f);
+        //yield return new WaitForSeconds(.1f);
 
         gecerliSaglik--;
 
         SliderGuncelle();
 
-        if(gecerliSaglik <= 0)
+        if(gecerliSaglik<=0)
         {
-            atakYapabilirmi=false;
+            atakYapabilirmi = false;
             gecerliSaglik = 0;
 
             Instantiate(iksirPrefab, transform.position, Quaternion.identity);
-
+            //SesManager.instance.SesEfektiCikar(1);
             anim.SetTrigger("canVerdi");
             orumcekCollider.enabled = false;
             orumcekSlider.gameObject.SetActive(false);
             Destroy(gameObject, 2f);
-        }
-        else
+        } else
         {
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 rb.velocity = new Vector2(-transform.localScale.x + i, rb.velocity.y);
 
                 yield return new WaitForSeconds(0.05f);
             }
+
 
 
             anim.SetBool("hareketEtsinmi", false);
@@ -199,5 +213,6 @@ public class orumcekController : MonoBehaviour
     {
         orumcekSlider.value = gecerliSaglik;
     }
+
 
 }
