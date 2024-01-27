@@ -111,23 +111,26 @@ public class PlayerHareketController : MonoBehaviour
             {
                 kiliciVurdumu = true;
                 kilicVurusBoxObje.SetActive(true);
-
+                SesManager.instance.SesEfektiCikar(4);
             }
             else
             {
                 kiliciVurdumu = false;
             }
-
             if (Input.GetKeyDown(KeyCode.E)&& mizrakPlayer.activeSelf)
             {
                 mizrakAnim.SetTrigger("mizrakAtti");
                 Invoke("MizragiFirlat", .5f);
+                SesManager.instance.SesEfektiCikar(5);
+
             }
 
             if (Input.GetKeyDown(KeyCode.E) && okPlayer.activeSelf && okAtabilirmi)
             {
                 okAnim.SetTrigger("okAtti");
                 StartCoroutine(OkuAzSonraAtRoutine());
+                SesManager.instance.SesEfektiCikar(7);
+
             }
 
         }

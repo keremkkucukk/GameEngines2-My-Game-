@@ -23,7 +23,7 @@ public class top : MonoBehaviour
                 GameManager.instance.toplananCoinAdet++;
 
                 UIManager.instance.CoinAdetGuncelle();
-
+                SesManager.instance.KarisikSesEfektiCikar(6);
 
                 Destroy(gameObject);
                 Instantiate(patlamaEfekti, transform.position, Quaternion.identity);

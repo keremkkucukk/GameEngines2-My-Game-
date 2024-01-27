@@ -49,6 +49,8 @@ public class KirilanManager : MonoBehaviour
                 {
                     GetComponent<BoxCollider2D>().enabled = false;
 
+                    SesManager.instance.SesEfektiCikar(9);
+
                     anim.SetTrigger("parcalanma");
 
                     for (int i = 0; i < 3; i++)
@@ -72,10 +74,14 @@ public class KirilanManager : MonoBehaviour
                 if (kacinciVurus == 0)
                 {
                     Instantiate(parlamaEfekti, transform.position, transform.rotation);
+                    SesManager.instance.SesEfektiCikar(3);
+
                 }
                 else if (kacinciVurus == 1)
                 {
                     Instantiate(parlamaEfekti, transform.position, transform.rotation);
+                    SesManager.instance.SesEfektiCikar(3);
+
                 }
                 else
                 {
@@ -92,7 +98,7 @@ public class KirilanManager : MonoBehaviour
                         coin.GetComponent<Rigidbody2D>().velocity = patlamaMitari * new Vector2(Random.Range(1, 2), transform.localScale.y + Random.Range(0, 2));
                     }
 
-
+                    SesManager.instance.SesEfektiCikar(9);
                     Destroy(gameObject);
                 }
 
